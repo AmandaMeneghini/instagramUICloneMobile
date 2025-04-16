@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import Lista from './src/List'
 
 class App extends Component {
   constructor(props) {
@@ -85,6 +86,14 @@ class App extends Component {
             />
           </TouchableOpacity>
         </View>
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={this.state.feed}
+          renderItem={({item}) => <Lista data={item}/>}
+        />
+
+
       </View>
     );
   }
