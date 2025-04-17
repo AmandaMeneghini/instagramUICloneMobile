@@ -16,6 +16,51 @@ class ProductList extends Component {
     this.state = {
       feed: this.props.data,
     };
+
+    this.showLikes = this.showLikes.bind(this);
+    this.like = this.like.bind(this);
+    this.loadingIcon = this.loadingIcon.bind(this);
+  };
+
+  loadingIcon(likeada){
+    return likeada ? require('../images/likeada.png') :
+                     require('../images/like.png')
+  }
+
+  like(){
+    let feed = this.state.feed;
+
+    if(feed.likeada === true){
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: false,
+          likers: feed.likers - 1
+        }
+      })
+    }else{
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: true,
+          likers: feed.likers + 1
+        }
+      })
+    }
+  }
+
+  showLikes(likers){
+    let feed = this.state.feed;
+
+    if(feed.likers <= 0){
+      return;
+    }
+
+    return(
+      <Text style={styles.likes}>
+        {feed.likers} {feed.likers > 1 ? 'curtidas' : 'curtida'}
+      </Text>
+    )
   }
 
   render() {
@@ -37,9 +82,9 @@ class ProductList extends Component {
         />
 
         <View style={styles.areaBtn}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.like}>
             <Image
-            source={require('../images/like.png')}
+            source={this.loadingIcon(this.state.feed.likeada)}
             style={styles.interactionIcons}
              />
           </TouchableOpacity>
@@ -51,6 +96,10 @@ class ProductList extends Component {
              />
           </TouchableOpacity>
         </View>
+
+        {
+         this.showLikes(this.state.feed.likers)
+        }
 
         <View style={styles.footerPostArea}>
           <Text style={styles.footerPostUserName}>
@@ -70,7 +119,7 @@ class ProductList extends Component {
 const styles = StyleSheet.create({
   areaFeed: {},
   userName: {
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'left',
     color: '#000',
   },
@@ -108,15 +157,19 @@ const styles = StyleSheet.create({
   }, 
   footerPostDescription: {
     paddingLeft: 5,
-    fontSize: 12,
+    fontSize: 13,
     color: '#000'
   },
   footerPostUserName: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#000',
     paddingLeft: 5
-  }  
+  } ,
+  likes: {
+    fontWeight: 'bold',
+    marginLeft: 5
+  }
 });
 
 export default ProductList;
