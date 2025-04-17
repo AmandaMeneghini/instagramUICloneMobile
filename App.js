@@ -89,6 +89,7 @@ class App extends Component {
 
         <FlatList
           showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
           data={this.state.feed}
           renderItem={({item}) => <ProductList data={item}/>}
         />
