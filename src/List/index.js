@@ -16,6 +16,27 @@ class ProductList extends Component {
     this.state = {
       feed: this.props.data,
     };
+
+    this.showLikes = this.showLikes.bind(this);
+    this.like = this.like.bind(this);
+  };
+
+  like(){
+    
+  }
+
+  showLikes(likers){
+    let feed = this.state.feed;
+
+    if(feed.likers <= 0){
+      return;
+    }
+
+    return(
+      <Text style={styles.likes}>
+        {feed.likers} {feed.likers > 1 ? 'curtidas' : 'curtida'}
+      </Text>
+    )
   }
 
   render() {
@@ -37,7 +58,7 @@ class ProductList extends Component {
         />
 
         <View style={styles.areaBtn}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.like}>
             <Image
             source={require('../images/like.png')}
             style={styles.interactionIcons}
@@ -51,6 +72,10 @@ class ProductList extends Component {
              />
           </TouchableOpacity>
         </View>
+
+        {
+         this.showLikes(this.state.feed.likers)
+        }
 
         <View style={styles.footerPostArea}>
           <Text style={styles.footerPostUserName}>
@@ -70,7 +95,7 @@ class ProductList extends Component {
 const styles = StyleSheet.create({
   areaFeed: {},
   userName: {
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'left',
     color: '#000',
   },
@@ -112,11 +137,15 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   footerPostUserName: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#000',
     paddingLeft: 5
-  }  
+  } ,
+  likes: {
+    fontWeight: 'bold',
+    marginLeft: 5
+  }
 });
 
 export default ProductList;
