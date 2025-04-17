@@ -19,10 +19,34 @@ class ProductList extends Component {
 
     this.showLikes = this.showLikes.bind(this);
     this.like = this.like.bind(this);
+    this.loadingIcon = this.loadingIcon.bind(this);
   };
 
+  loadingIcon(likeada){
+    return likeada ? require('../images/likeada.png') :
+                     require('../images/like.png')
+  }
+
   like(){
-    
+    let feed = this.state.feed;
+
+    if(feed.likeada === true){
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: false,
+          likers: feed.likers - 1
+        }
+      })
+    }else{
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: true,
+          likers: feed.likers + 1
+        }
+      })
+    }
   }
 
   showLikes(likers){
@@ -60,7 +84,7 @@ class ProductList extends Component {
         <View style={styles.areaBtn}>
           <TouchableOpacity onPress={this.like}>
             <Image
-            source={require('../images/like.png')}
+            source={this.loadingIcon(this.state.feed.likeada)}
             style={styles.interactionIcons}
              />
           </TouchableOpacity>
@@ -133,7 +157,7 @@ const styles = StyleSheet.create({
   }, 
   footerPostDescription: {
     paddingLeft: 5,
-    fontSize: 12,
+    fontSize: 13,
     color: '#000'
   },
   footerPostUserName: {
