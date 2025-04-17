@@ -9,7 +9,7 @@ import {
  FlatList,
 } from 'react-native';
 
-class List extends Component{
+class ProductList extends Component{
  render(){
   return(
    <View>
@@ -19,4 +19,4 @@ class List extends Component{
  }
 }
 
-export default List;
+export default ProductList;
